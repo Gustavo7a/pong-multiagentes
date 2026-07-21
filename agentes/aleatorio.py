@@ -1,7 +1,7 @@
-"""Agente aleatório — baseline de referência para comparação.
+"""Agente aleatório, o piso de referência do projeto.
 
-Escolhe uma ação uniformemente ao acaso dentro do espaço de ações. Serve como
-linha de base contra a qual os agentes inteligentes devem se sair melhor.
+Sorteia uma ação qualquer do espaço de ações. Serve como linha de base: quem não
+ganhar dele com folga não está jogando de verdade.
 """
 
 from __future__ import annotations

@@ -1,9 +1,4 @@
-"""Interface comum a todos os agentes do projeto.
-
-Todo agente (aleatório, heurístico, aprendizado por reforço, genético) deve
-implementar ``agir`` recebendo a observação (RAM de 128 bytes) e devolvendo uma
-ação inteira válida no espaço de ações do ambiente.
-"""
+"""Interface comum a todos os agentes do projeto."""
 
 from __future__ import annotations
 
@@ -19,11 +14,11 @@ class Agente(ABC):
 
     @abstractmethod
     def agir(self, observacao: np.ndarray) -> int:
-        """Escolhe uma ação a partir da observação (vetor de 128 bytes)."""
+        """Escolhe uma ação a partir dos 128 bytes da RAM."""
         raise NotImplementedError
 
     def reiniciar(self) -> None:
         """Chamado no início de cada episódio. Sobrescreva se guardar estado."""
 
     def observar(self, recompensa: float, terminou: bool) -> None:
-        """Recebe o retorno do ambiente após a ação. Útil para aprendizado."""
+        """Retorno do ambiente depois da ação. Serve para quem aprende."""

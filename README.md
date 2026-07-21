@@ -16,6 +16,7 @@ ambiente_pong.py       # ambiente PettingZoo do Pong com observação de RAM
 jogar.py               # roda partidas entre 2 agentes e mostra o placar
 torneio.py             # todo-contra-todo com tabela de classificação
 treinar_genetico.py    # algoritmo genético que evolui os pesos
+treinar_reforco.py     # Q-learning online do agente de reforco
 agentes/
   base.py              # interface Agente (agir / reiniciar / observar)
   fabrica.py           # registro de agentes usado pela linha de comando
@@ -23,6 +24,7 @@ agentes/
   ram.py               # traduz os 128 bytes em bola, raquetes e placar
   heuristico.py        # AgenteHeuristico, regras sobre o estado da RAM
   genetico.py          # AgenteGenetico, rede evoluída sem regra escrita
+  reforco.py           # AgenteReforco, Q-learning tabular sobre a RAM
   pesos_genetico.npz   # pesos campeões, gerados pelo treino
 scripts/
   inspecionar_ram.py   # mede o mapa da RAM na marra
@@ -124,6 +126,21 @@ python treinar_genetico.py --adversario heuristico --inicial agentes/pesos_genet
 
 As sementes mudam a cada geração, senão o campeão decora uma partida específica.
 
+### reforco
+
+Aqui o agente aprende direto durante as partidas, atualizando uma tabela Q com
+base na recompensa de cada transição. O estado é discretizado em poucos bins da
+RAM, para não explodir o número de combinações.
+
+O treinamento é online: a política melhora a cada episódio e a exploração vai
+caindo aos poucos com epsilon-greedy.
+
+```bash
+python treinar_reforco.py
+python treinar_reforco.py --episodios 500 --adversario heuristico
+python treinar_reforco.py --lado direita --saida agentes/politica_reforco_direita.npz
+```
+
 ## Resultados
 
 Comparar cada agente só contra o aleatório não diz nada, porque qualquer coisa
@@ -224,7 +241,7 @@ Adicionar em `agentes/`, todos herdando de `Agente` (`base.py`):
 
 - [x] agente heurístico
 - [x] agente genético (rede de 43 pesos evoluída pelo placar)
-- [ ] agente de aprendizado por reforço
+- [x] agente de aprendizado por reforço
 
 Cada agente novo só precisa implementar `agir(observacao) -> int` e registrar o
 nome em `agentes/fabrica.py`.

@@ -10,9 +10,10 @@ from .aleatorio import AgenteAleatorio
 from .base import Agente
 from .genetico import AgenteGenetico
 from .heuristico import AgenteHeuristico
+from .reforco import AgenteReforco
 
 # Os agentes do estudo, mais o piso de referência.
-TIPOS = ("aleatorio", "heuristico", "genetico")
+TIPOS = ("aleatorio", "heuristico", "genetico", "reforco")
 
 BASELINES = ("aleatorio",)
 
@@ -32,4 +33,6 @@ def criar_agente(tipo: str, lado: str, n_acoes: int, seed: int = 0) -> Agente:
         return AgenteHeuristico(lado=lado, prever=True)
     if tipo == "genetico":
         return AgenteGenetico(lado=lado)
+    if tipo == "reforco":
+        return AgenteReforco(lado=lado, n_acoes=n_acoes, seed=seed)
     raise ValueError(f"tipo de agente desconhecido: {tipo}")
